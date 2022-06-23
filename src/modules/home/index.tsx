@@ -28,8 +28,6 @@ const data = [
     },
 ];
 
-
-
 export const Home: React.FC = (): ReactElement => {
 
     const renderItem = ({ item }) => {
