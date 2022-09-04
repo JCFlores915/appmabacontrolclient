@@ -1,20 +1,29 @@
-import { StyleSheet, Text, View, Image, Platform } from 'react-native'
+import { StyleSheet, Text, View, Image, Platform, TouchableOpacity } from 'react-native'
 import React from 'react'
 
-export const Header = () => {
+interface props {
+    navegation: any
+}
+
+export const Header = ({navegation}:props) => {
+
     return (
         <>
             <View style={styles.container_header}>
-                <Image
-                    style={styles.header_icon}
-                    source={require('../../assets/arrow-left.png')}
-                    resizeMode="contain"
-                />
+                <TouchableOpacity onPress={()=>{
+                    navegation.goBack();
+                }}>
+                    <Image
+                        style={styles.header_icon}
+                        source={require('../../assets/arrow-left.png')}
+                        resizeMode="contain"
+                    />
+                </TouchableOpacity>
             </View>
             <View style={styles.container_logo}>
                 <Image
                     style={styles.logo}
-                    source={require('../../assets/logo.png')}
+                    source={require('../../assets/logoMabaControl.jpg')}
                     resizeMode="contain"
                 />
             </View>
@@ -40,7 +49,8 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         backgroundColor: '#fff',
         width: '100%',
-        height: 80
+        height: 80,
+        marginBottom: 20
     },
     logo: {
         width: 130,

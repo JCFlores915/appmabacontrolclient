@@ -3,33 +3,35 @@ import { StyleSheet, Text, View, FlatList, TouchableOpacity } from 'react-native
 
 // interface Props
 interface Props {
-  data: any[]
+  data: any[],
+  navigation?: any
 }
 
 
 
-export const List = ({ data }: Props) => {
+export const List = ({ data, navigation }: Props) => {
 
 
   const renderItem = ({ item }: any) => {
-
     return (
-      <TouchableOpacity onPress={() => { }} style={styles.flatlist_item}>
+      <TouchableOpacity onPress={() => {
+        item?.titleContrato ? navigation.navigate('/Cuote', { id: item.id }) : null
+      }} style={styles.flatlist_item}>
         {item?.titleContrato ? <Text style={[styles.flatlist_item_title]}>{item.titleContrato}</Text> : <Text style={[styles.flatlist_item_title]}>{item.titleMes}</Text>}
         {/* PLAN */}
         {/* CUANDO SE PASA UN MES PENDIENTE SE MUESTRA EN EL TEXTO */}
         {item?.titleContrato ? <Text style={[styles.flatlist_item_alert]}>{item.mesPendiente}</Text> : null}
         {/* CUANDO SE PASA UN ESTADO PENDIENTE SE MUESTRA EN EL CIRCULO */}
-        {item?.titleContrato ? <View style={ item?.estadoPendiente ? styles.flatlist_item_circle_danger : styles.flatlist_item_circle_success}></View> : null}
+        {item?.titleContrato ? <View style={item?.estadoPendiente ? styles.flatlist_item_circle_danger : styles.flatlist_item_circle_success}></View> : null}
 
         {/* CUOTAS */}
         {/* CUANDO PASAMOS UN MONTO*/}
-        {item?.titleMes && <Text style={ item?.cancelado === '0' ? [styles.flatlist_item_monto_white] :
-         ( item?.cancelado === '1' ? [styles.flatlist_item_monto_green] : [styles.flatlist_item_monto_red]) }>{item.monto}</Text>}
+        {item?.titleMes && <Text style={item?.cancelado === '0' ? [styles.flatlist_item_monto_white] :
+          (item?.cancelado === '1' ? [styles.flatlist_item_monto_green] : [styles.flatlist_item_monto_red])}>{item.monto}</Text>}
 
         {/* CUANDO PASAMOS CANCELADO CIRCULO*/}
         {item?.titleMes && <View style={item?.cancelado === '0' ? [styles.flatlist_item_circle_white] :
-         ( item?.cancelado === '1' ? [styles.flatlist_item_circle_success] : [styles.flatlist_item_circle_danger]) }></View>}
+          (item?.cancelado === '1' ? [styles.flatlist_item_circle_success] : [styles.flatlist_item_circle_danger])}></View>}
 
       </TouchableOpacity>
     );
@@ -77,8 +79,8 @@ const styles = StyleSheet.create({
     fontSize: 16,
     marginLeft: 15,
     color: 'white',
-    fontWeight: 'bold'
-
+    fontWeight: 'bold',
+    width: 150
   },
   flatlist_item_alert: {
     fontSize: 12,

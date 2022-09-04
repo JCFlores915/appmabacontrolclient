@@ -1,7 +1,13 @@
 import { StyleSheet, Text, View } from 'react-native'
-import React, { ReactElement } from 'react'
+import React, { ReactElement, useState, useEffect } from 'react'
 
 import { Header, List } from '../../components';
+
+
+import { URL } from '../../api/url';
+import { verifyClient } from '../../api'
+
+import { NativeStackScreenProps } from '@react-navigation/native-stack';
 
 const data = [
   {
@@ -42,15 +48,42 @@ const data = [
   },
 ];
 
+interface Props extends NativeStackScreenProps<any, any> { }
 
-export const Cuote: React.FC = (): ReactElement => {
+export const Cuote = ({route, navigation}:Props) => {
+
+  console.log("ID DEL COINTRATO", route);
+  const idContrato = route?.params?.id;
+  const [cuote, setCoute] = useState([])
+
+  const listCuote = async (id: any) => {
+
+    try {
+      const resp = await verifyClient.post(URL.listCuote,{ id:id});
+      setCoute(resp.data.data);
+      console.log("CUOTAS",resp);
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
+  useEffect(()=>{
+
+    if(idContrato){
+      console.log(idContrato);
+      listCuote(idContrato);
+    }
+
+  },[idContrato]);
+
   return (
     <View style={styles.container}>
-      <Header />
+      <Header navegation={navigation} />
       <View style={styles.container_body}>
         <View style={styles.container_body_title}>
           <Text style={styles.body_item_title}>
-            MENSUALIDADES PLAN DE AHORRO
+            {/* MENSUALIDADES PLAN DE AHORRO */}
+            MENSUALIDADES
           </Text>
         </View>
         <View style={styles.container_body_ditails}>
@@ -88,7 +121,7 @@ export const Cuote: React.FC = (): ReactElement => {
               </Text>
             </View>
         </View>
-        <List data={data} />
+        <List data={cuote} />
       </View>
     </View>
   )

@@ -11,8 +11,8 @@ const Stack = createNativeStackNavigator();
 export const Navigation:React.FC<Props> = (): ReactElement => {
     return (
         <NavigationContainer>
-            <Stack.Navigator initialRouteName="/ScannScreen">
-                <Stack.Screen options={{ headerShown: false }} name="/ScannScreen" component={Home} />
+            <Stack.Navigator initialRouteName="/ScanScreen">
+                <Stack.Screen options={{ headerShown: false }} name="/ScanScreen" component={ScanScreen} />
                 <Stack.Screen options={{ headerShown: false }} name="/Home" component={Home} />
                 <Stack.Screen options={{ headerShown: false }} name="/Cuote" component={Cuote} />
             </Stack.Navigator>
